@@ -18,19 +18,21 @@
         <th>Temperature</th>
         <th>Extrude Speed</th>
         <th>Print Speed</th>
+        <th>STL File</th>
       </tr>
       </thead>
       <tbody>
       {% for job in jobs.items %}
       <tr>
         <td><a href="{{ url_for('edit', job_id=job.id) }}">{{ job.job_name }}</a></td>
-        <td>{{ job.email }}</td>
+        <td><a href="mailto:{{ job.email }}">{{ job.email }}</a></td>
         <td>{{ job.infill }}%</td>
         <td>{{ job.shells }}</td>
         <td>{{ job.layer_height }} mm</td>
         <td>{{ job.temperature }} &deg;</td>
         <td>{{ job.extrude_speed|title }}</td>
         <td>{{ job.print_speed|title }}</td>
+        <td>{% if job.stl_file %}<a href="{{ url_for('download', job_id=job.id) }}">Download</a>{% endif %}</td>
       </tr>
       {% endfor %}
       </tbody>

@@ -1,5 +1,5 @@
 from flask_wtf import Form
-from wtforms import DecimalField, IntegerField, SelectField, StringField
+from wtforms import DecimalField, FileField, IntegerField, SelectField, StringField
 from wtforms.validators import DataRequired, Email, NumberRange
 
 
@@ -18,3 +18,4 @@ class NewJobForm(Form):
         ('low', 'Low'),
         ('medium', 'Medium'),
         ('high', 'High')])
+    stl_file = FileField(u'STL File')

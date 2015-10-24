@@ -11,3 +11,4 @@ class Job(db.Model):
     temperature = db.Column(db.Numeric(precision=11, scale=2), nullable=False)
     extrude_speed = db.Column(db.String(16), nullable=False)
     print_speed = db.Column(db.String(16), nullable=False)
+    stl_file = db.Column(db.LargeBinary(), nullable=True)

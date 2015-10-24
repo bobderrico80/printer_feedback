@@ -1,7 +1,7 @@
 from app import app, db
 from app.forms import NewJobForm
 from app.models import Job
-from flask import flash, redirect, render_template, request, url_for
+from flask import flash, redirect, render_template, request, make_response, url_for
 from sqlalchemy.exc import IntegrityError
 
 
@@ -22,6 +22,10 @@ def submit():
     form = NewJobForm()
 
     if form.validate_on_submit():
+        if form.stl_file.data:
+            stl_data = request.files[form.stl_file.name].read()
+        else:
+            stl_data = None
         j = Job(job_name=form.job_name.data,
                 email=form.email.data,
                 infill=form.infill.data,
@@ -29,7 +33,8 @@ def submit():
                 layer_height=form.layer_height.data,
                 temperature=form.temperature.data,
                 extrude_speed=form.extrude_speed.data,
-                print_speed=form.print_speed.data)
+                print_speed=form.print_speed.data,
+                stl_file=stl_data)
         db.session.add(j)
         try:
             db.session.commit()
@@ -52,15 +57,21 @@ def edit(job_id):
     job = Job.query.filter_by(id=job_id).first()
 
     if form.validate_on_submit():
+        if form.validate_on_submit():
+            if form.stl_file.data:
+                stl_data = request.files[form.stl_file.name].read()
+            else:
+                stl_data = job.stl_file
         job = Job.query.filter_by(id=job_id).first()
-        job.job_name = form.job_name.data,
-        job.email = form.email.data,
-        job.infill = form.infill.data,
-        job.shells = form.shells.data,
-        job.layer_height = form.layer_height.data,
-        job.temperature = form.temperature.data,
-        job.extrude_speed = form.extrude_speed.data,
+        job.job_name = form.job_name.data
+        job.email = form.email.data
+        job.infill = form.infill.data
+        job.shells = form.shells.data
+        job.layer_height = form.layer_height.data
+        job.temperature = form.temperature.data
+        job.extrude_speed = form.extrude_speed.data
         job.print_speed = form.print_speed.data
+        job.stl_file = stl_data
 
         db.session.add(job)
         db.session.commit()
@@ -91,3 +102,11 @@ def delete(job_id):
     db.session.commit()
     flash('Report deleted')
     return redirect(url_for('view'))
+
+@app.route('/download/<int:job_id>')
+def download(job_id):
+    job = Job.query.filter_by(id=job_id).first()
+    file_data = job.stl_file
+    response = make_response(file_data)
+    response.headers['Content-Disposition'] = 'attachment; filename=job{}.atl'.format(job_id)
+    return response
