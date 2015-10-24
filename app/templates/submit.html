@@ -1,70 +1,76 @@
 {% extends "base.html" %}
 {% block content %}
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    {% for message in messages %}
-      <p class="bg-success">{{ message }}</p>
-    {% endfor %}
-  {% endif %}
-{% endwith %}
-<form method="post" action="submit">
-  {{ form.hidden_tag() }}
-  <div class="form-group">
-    {{ form.job_name.label(for="job_name") }}
-    {{ form.job_name(class="form-control", placeholder="Unique name for this job") }}
-    {% if form.job_name.errors %}
-      <p class="text-danger">{% for error in form.job_name.errors %}<span>{{ error }}</span>{% endfor %}</p>
-    {% endif %}
+
+<div class="row"> <div class="col-sm-8 col-sm-offset-2">
+    <h2>{{ title }}</h2>
   </div>
-  <div class="form-group">
-    {{ form.email.label(for="email") }}
-    {{ form.email(class="form-control", placeholder="Email address of the reporter") }}
-    {% if form.email.errors %}
-      <p class="text-danger">{% for error in form.email.errors %}<span>{{ error }}</span>{% endfor %}</p>
-    {% endif %}
+</div>
+<div class="row">
+  <div class="col-sm-8 col-sm-offset-2">
+    {% if form_context == 'add' %}
+    <form method="post" action="/submit">
+      {% else %}
+      <form method="post" action="/edit/{{ job_id }}">
+        {% endif %}
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+          {{ form.job_name.label(for="job_name") }}
+          {{ form.job_name(class="form-control", placeholder="Unique name for this job") }}
+          {% if form.job_name.errors %}
+          <p class="text-danger">{% for error in form.job_name.errors %}<span>{{ error }}</span>{% endfor %}</p>
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.email.label(for="email") }}
+          {{ form.email(class="form-control", placeholder="Email address of the reporter") }}
+          {% if form.email.errors %}
+          <p class="text-danger">{% for error in form.email.errors %}<span>{{ error }}</span>{% endfor %}</p>
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.infill.label(for="infill") }}
+          {{ form.infill(class="form-control", placeholder="Enter a number from 1 to 100, for the infill percent used") }}
+          {% if form.infill.errors %}
+          <p class="text-danger">{% for error in form.infill.errors %}<span>{{ error }}</span>{% endfor %}</p>
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.shells.label(for="shells") }}
+          {{ form.shells(class="form-control", placeholder="Enter number of shells used") }}
+          {% if form.shells.errors %}
+          <p class="text-danger">{% for error in form.shells.errors %}<span>{{ error }}</span>{% endfor %}</p>
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.layer_height.label(for="layer_height") }}
+          {{ form.layer_height(class="form-control", placeholder="Enter the layer height (in mm) used") }}
+          {% if form.layer_height.errors %}
+          <p class="text-danger">{% for error in form.layer_height.errors %}<span>{{ error }}</span>{% endfor %}</p>
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.temperature.label(for="temperature") }}
+          {{ form.temperature(class="form-control", placeholder="Enter the extruder temperature used") }}
+          {% if form.temperature.errors %}
+          <p class="text-danger">{% for error in form.temperature.errors %}<span>{{ error }}</span>{% endfor %}</p>
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.extrude_speed.label(for="extrude_speed") }}
+          {{ form.extrude_speed(class="form-control") }}
+          {% if form.extrude_speed.errors %}
+          <p class="text-danger">{% for error in form.extrude_speed.errors %}<span>{{ error }}</span>{% endfor %}</p>
+          {% endif %}
+        </div>
+        <div class="form-group">
+          {{ form.print_speed.label(for="print_speed") }}
+          {{ form.print_speed(class="form-control") }}
+          {% if form.print_speed.errors %}
+          <p class="text-danger">{% for error in form.print_speed.errors %}<span>{{ error }}</span>{% endfor %}</p>
+          {% endif %}
+        </div>
+        <button type="submit" class="btn btn-primary">{{ button_text }}</button>
+      </form>
   </div>
-  <div class="form-group">
-    {{ form.infill.label(for="infill") }}
-    {{ form.infill(class="form-control", placeholder="Enter a number from 1 to 100, for the infill percent used") }}
-    {% if form.infill.errors %}
-      <p class="text-danger">{% for error in form.infill.errors %}<span>{{ error }}</span>{% endfor %}</p>
-    {% endif %}
-  </div>
-  <div class="form-group">
-    {{ form.shells.label(for="shells") }}
-    {{ form.shells(class="form-control", placeholder="Enter number of shells used") }}
-    {% if form.shells.errors %}
-      <p class="text-danger">{% for error in form.shells.errors %}<span>{{ error }}</span>{% endfor %}</p>
-    {% endif %}
-  </div>
-  <div class="form-group">
-    {{ form.layer_height.label(for="layer_height") }}
-    {{ form.layer_height(class="form-control", placeholder="Enter the layer height (in mm) used") }}
-    {% if form.layer_height.errors %}
-      <p class="text-danger">{% for error in form.layer_height.errors %}<span>{{ error }}</span>{% endfor %}</p>
-    {% endif %}
-  </div>
-  <div class="form-group">
-    {{ form.temperature.label(for="temperature") }}
-    {{ form.temperature(class="form-control", placeholder="Enter the extruder temperature used") }}
-    {% if form.temperature.errors %}
-      <p class="text-danger">{% for error in form.temperature.errors %}<span>{{ error }}</span>{% endfor %}</p>
-    {% endif %}
-  </div>
-  <div class="form-group">
-    {{ form.extrude_speed.label(for="extrude_speed") }}
-    {{ form.extrude_speed(class="form-control") }}
-    {% if form.extrude_speed.errors %}
-      <p class="text-danger">{% for error in form.extrude_speed.errors %}<span>{{ error }}</span>{% endfor %}</p>
-    {% endif %}
-  </div>
-  <div class="form-group">
-    {{ form.print_speed.label(for="print_speed") }}
-    {{ form.print_speed(class="form-control") }}
-    {% if form.print_speed.errors %}
-      <p class="text-danger">{% for error in form.print_speed.errors %}<span>{{ error }}</span>{% endfor %}</p>
-    {% endif %}
-  </div>
-  <button type="submit" class="btn btn-primary">Submit Report</button>
-</form>
+</div>
 {% endblock %}
