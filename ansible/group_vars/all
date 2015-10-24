@@ -1,0 +1,11 @@
+---
+mysql_bind_address: "0.0.0.0"
+mysql_databases:
+  - name: printer_feedback
+    collation: "utf8_general_ci"
+    encoding: "utf8"
+mysql_users:
+  - name: printer_feedback
+    pass: abcd1234
+    priv: "*.*:ALL"
+    host: "%"

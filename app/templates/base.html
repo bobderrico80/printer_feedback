@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{{ title }} - 3D Printer Feedback Reporting</title>
+    <link href="/static/vendor/bootstrap/dist/css/bootstrap.css" rel="stylesheet" media="screen"/>
+    <link href="/static/vendor/bootstrap/dist/css/bootstrap-theme.css" rel="stylesheet" media="screen"/>
+    <link href="/static/main.css" rel="stylesheet"/>
+  </head>
+  <body>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                  data-target="#mobile-nav" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <i class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></i>
+          </button>
+          <a class="navbar-brand" href="{{ url_for('submit') }}">3D Printer Feedback Reporting</a>
+        </div>
+        <div class="collapse navbar-collapse" id="mobile-nav">
+          <ul class="nav navbar-nav">
+            <li><a href="{{ url_for('submit') }}">Submit Report</a></li>
+            <li><a href="{{ url_for('list') }}">View Reports</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <main class="container">
+      {% block content %}{% endblock %}
+    </main>
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">Created by Bob D'Errico</p>
+      </div>
+    </footer>
+
+    <script src="/static/vendor/jquery/dist/jquery.js"></script>
+    <script src="/static/vendor/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="/static/main.js"></script>
+  </body>
+</html>
