@@ -8,9 +8,9 @@
 <div class="row">
   <div class="col-sm-8 col-sm-offset-2">
     {% if form_context == 'add' %}
-    <form method="post" action="/submit">
+    <form method="post" action="{{ url_for('submit') }}">
       {% else %}
-      <form method="post" action="/edit/{{ job_id }}">
+      <form method="post" action="{{ url_for('edit', job_id=job_id) }}">
         {% endif %}
         {{ form.hidden_tag() }}
         <div class="form-group">
@@ -70,6 +70,9 @@
           {% endif %}
         </div>
         <button type="submit" class="btn btn-primary">{{ button_text }}</button>
+        {% if form_context == 'edit' %}
+        <a class="btn btn-danger pull-right" href="{{ url_for('delete', job_id=job_id) }}">Delete Report</a>
+        {% endif %}
       </form>
   </div>
 </div>

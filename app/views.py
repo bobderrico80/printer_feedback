@@ -29,7 +29,7 @@ def submit():
         flash('Report successfully saved!')
         return redirect(url_for('submit'))
 
-    return render_template('submit.html',
+    return render_template('edit.html',
                            title='Submit Report',
                            form=form,
                            form_context = 'add',
@@ -65,9 +65,18 @@ def edit(job_id):
     form.extrude_speed.data = job.extrude_speed
     form.print_speed.data = job.print_speed
 
-    return render_template('submit.html',
+    return render_template('edit.html',
                            title='Edit Report',
                            job_id=job.id,
                            form=form,
-                           form_context=edit,
+                           form_context='edit',
                            button_text='Save Changes')
+
+@app.route('/delete/<int:job_id>')
+def delete(job_id):
+    job = Job.query.filter_by(id=job_id).first()
+
+    db.session.delete(job)
+    db.session.commit()
+    flash('Report deleted')
+    return redirect(url_for('view'))
