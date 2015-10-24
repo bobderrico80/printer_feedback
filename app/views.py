@@ -2,6 +2,7 @@ from app import app, db
 from app.forms import NewJobForm
 from app.models import Job
 from flask import flash, redirect, render_template, url_for
+from sqlalchemy.exc import IntegrityError
 
 
 @app.route('/view')
@@ -25,9 +26,14 @@ def submit():
                 extrude_speed=form.extrude_speed.data,
                 print_speed=form.print_speed.data)
         db.session.add(j)
-        db.session.commit()
-        flash('Report successfully saved!')
-        return redirect(url_for('submit'))
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback()
+            flash('Sorry, there\'s already a job named {}'.format(j.job_name))
+        else:
+            flash('Report successfully saved!')
+            return redirect(url_for('submit'))
 
     return render_template('edit.html',
                            title='Submit Report',
