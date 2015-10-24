@@ -1,13 +1,18 @@
 from app import app, db
 from app.forms import NewJobForm
 from app.models import Job
-from flask import flash, redirect, render_template, url_for
+from flask import flash, redirect, render_template, request, url_for
 from sqlalchemy.exc import IntegrityError
 
 
 @app.route('/view')
 def view():
-    jobs = Job.query.all()
+    if 'p' in request.args:
+        page = int(request.args['p'])
+    else:
+        page = 1
+
+    jobs = Job.query.order_by(Job.job_name).paginate(page, 10)
     return render_template('view.html', title='View Reports', jobs=jobs)
 
 
