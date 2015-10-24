@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block content %}
+<table class="table table-striped">
+    <thead>
+      <tr>
+          <th>Job Name</th>
+          <th>Email Address</th>
+          <th>Infill</th>
+          <th>Shells</th>
+          <th>Layer Height</th>
+          <th>Temperature</th>
+          <th>Extrude Speed</th>
+          <th>Print Speed</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for job in jobs %}
+      <tr>
+        <td>{{ job.job_name }}</td>
+        <td>{{ job.email }}</td>
+        <td>{{ job.infill }}%</td>
+        <td>{{ job.shells }}</td>
+        <td>{{ job.layer_height }} mm</td>
+        <td>{{ job.temperature }} &deg;</td>
+        <td>{{ job.extrude_speed|title }}</td>
+        <td>{{ job.print_speed|title }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

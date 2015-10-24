@@ -4,9 +4,10 @@ from app.models import Job
 from flask import flash, redirect, render_template, url_for
 
 
-@app.route('/list')
-def list():
-    return render_template('list.html', title='List Reports')
+@app.route('/view')
+def view():
+    jobs = Job.query.all()
+    return render_template('view.html', title='View Reports', jobs=jobs)
 
 
 @app.route('/')
@@ -15,14 +16,14 @@ def submit():
     form = NewJobForm()
 
     if form.validate_on_submit():
-        j = Job(job_name=form.job_name,
-                email=form.email,
-                infill=form.infill,
-                shells=form.shells,
-                layer_height=form.layer_height,
-                temperature=form.temperature,
-                extrude_speed=form.extrude_speed,
-                print_speed=form.print_speed)
+        j = Job(job_name=form.job_name.data,
+                email=form.email.data,
+                infill=form.infill.data,
+                shells=form.shells.data,
+                layer_height=form.layer_height.data,
+                temperature=form.temperature.data,
+                extrude_speed=form.extrude_speed.data,
+                print_speed=form.print_speed.data)
         db.session.add(j)
         db.session.commit()
         flash('Report successfully submitted!')
