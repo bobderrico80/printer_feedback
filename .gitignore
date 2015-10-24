@@ -1,4 +1,4 @@
 /app/static/vendor/*
 *.iml
-/.idea/
+.idea/
 *.pyc
