@@ -5,30 +5,46 @@ html {
 
 body {
   margin-bottom: 100px;
+  background-color: rgb(236, 240, 241);
+  font-family: 'Source Sans Pro', sans-serif;
 }
 
-.form-inline {
-  margin: 20px 0;
+h1, h2, h3,
+a, a:active, a:link, a:visited {
+  color: rgb(183, 89, 79);
 }
 
-.form-inline input {
-  margin-right: 30px;
+.table-container {
+  min-height: 425px;
 }
 
-.form-inline label {
-  margin-right: 10px;
+.navbar-default {
+  background-image: none;
+  background-color: rgba(44, 62, 80, .7);
+  border: 0;
 }
 
-.input-container {
-  display: inline-block;
+a.btn-danger {
+  color: white;
 }
 
-.input-container .help-block {
-  position: absolute;
+.navbar-default .navbar-brand,
+.navbar-default .navbar-nav > li > a {
+  color: white;
+  -webkit-transition: background-color 250ms ease-in-out;
+  -moz-transition: background-color 250ms ease-in-out;
+  -o-transition: background-color 250ms ease-in-out;
+  transition: background-color 250ms ease-in-out;
 }
 
-.text-editable input {
-  position: absolute;
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-nav > li > a:hover {
+  background-color: rgb(231, 76, 60);
+  color: white;
+  -webkit-transition: background-color 250ms ease-in-out;
+  -moz-transition: background-color 250ms ease-in-out;
+  -o-transition: background-color 250ms ease-in-out;
+  transition: background-color 250ms ease-in-out;
 }
 
 .footer {
@@ -36,9 +52,10 @@ body {
   bottom: 0;
   width: 100%;
   height: 60px;
-  background-color: #f5f5f5;
+  background-color: rgb(44, 62, 80);
 }
 
 .footer .text-muted {
   margin: 20px 0;
+  color: white;
 }

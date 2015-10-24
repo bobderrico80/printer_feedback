@@ -6,7 +6,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-sm-12">
+  <div class="col-sm-12 table-container">
     <table class="table table-striped table-hover">
       <thead>
       <tr>
@@ -37,10 +37,14 @@
       {% endfor %}
       </tbody>
     </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
     {% if jobs.has_prev %}
-      <a class="btn btn-default" href="{{ url_for('view', p=jobs.prev_num) }}">Previous Page</a>
+    <a class="btn btn-default" href="{{ url_for('view', p=jobs.prev_num) }}">Previous Page</a>
     {% elif jobs.has_next %}
-      <a class="btn btn-default pull-right" href="{{ url_for('view', p=jobs.next_num) }}">Next Page</a>
+    <a class="btn btn-default pull-right" href="{{ url_for('view', p=jobs.next_num) }}">Next Page</a>
     {% endif %}
   </div>
 </div>
